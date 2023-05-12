@@ -1,0 +1,9 @@
+.nav {
+    width: 100%;
+    height: var(--nav-bar-height);
+    display: flex;
+    justify-content: space-around;
+    justify-items: center;
+    align-items: center;
+    background: var(--bg-inverted-color);
+}
