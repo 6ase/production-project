@@ -1,0 +1,14 @@
+.Button {
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--theme-icon-color);
+    border-color:var(--theme-icon-color) ;
+}
+.clear {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    border: none;
+}

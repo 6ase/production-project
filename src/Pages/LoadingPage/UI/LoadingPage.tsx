@@ -1,11 +1,13 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const LoadingPage = () => {
-    return (
-        <div>
-            ...Loading
-        </div>
-    );
+	const { t } = useTranslation();
+	return (
+		<div>
+			{ t('Загрузка') }
+		</div>
+	);
 };
 
 export { LoadingPage };

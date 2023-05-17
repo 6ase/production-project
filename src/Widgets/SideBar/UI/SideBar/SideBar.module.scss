@@ -1,0 +1,12 @@
+.SideBar {
+    width: var(--side-bar-width-closed);
+    height: calc(100vh - var(--nav-bar-height));
+    background-color: var(--bg-inverted-color);
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    transition: width 0.4s;  
+}
+.active {
+    width: var(--side-bar-width-opend)
+}

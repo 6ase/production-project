@@ -1,5 +1,5 @@
-import NavBarLink from './UI/NavBarLink'
+import NavBarLink from './UI/NavBarLink';
 
 export { 
-    NavBarLink,
- }
+	NavBarLink,
+};
