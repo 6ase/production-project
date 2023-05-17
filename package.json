@@ -7,7 +7,9 @@
     "build": "webpack",
     "start": "webpack serve --env port=3000",
     "build:prod": "webpack --env mode=production",
-    "build:dev": "webpack --env mode=development"
+    "build:dev": "webpack --env mode=development",
+    "eslint:fix": "eslint **/*.{ts,tsx} --fix",
+    "stylelint:fix": "nn"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
     "eslint": "^8.40.0",
     "eslint-config-xo": "^0.43.1",
     "eslint-config-xo-typescript": "^0.57.0",
+    "eslint-plugin-i18next": "^6.0.1",
     "eslint-plugin-react": "^7.32.2",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
