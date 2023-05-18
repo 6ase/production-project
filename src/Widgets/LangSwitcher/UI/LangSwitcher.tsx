@@ -6,7 +6,7 @@ import En from 'Shared/assets/icons/en.svg';
 import Ru from 'Shared/assets/icons/ru.svg';
 
 export const LangSwitcher = () => {
-	const { t, i18n } = useTranslation();
+	const { i18n } = useTranslation();
 	const lang = i18n.language;
 
 	const changeLang = () => {
