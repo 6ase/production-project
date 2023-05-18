@@ -40,8 +40,13 @@ module.exports = {
 			'error',
 			'always'
 		],
+		'comma-spacing': [ 'error', { 'before': false, 'after': true } ],
+		'object-curly-spacing': [ 'error', 'always' ],
+		'array-bracket-spacing': [ 'error', 'always' ],
+		'computed-property-spacing': [ 'error', 'always' ],
+		'key-spacing': [ 'error', { 'afterColon': true } ],
 		'@typescript-eslint/ban-ts-comment': 'off',
-		'react/react-in-jsx-scope':'off',
+		'react/react-in-jsx-scope': 'off',
 		'i18next/no-literal-string': 2
 	}
 };

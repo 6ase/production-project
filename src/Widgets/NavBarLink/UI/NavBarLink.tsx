@@ -11,7 +11,10 @@ const NavBarLink = () => {
 	return (
 		<>
 			{links.map(link => 
-				<NavLink to={ link.to } key={link.name} className={ ({ isActive } ) => setActiveStatus(isActive)}> { t(link.name) }</NavLink>) }
+				<NavLink to={ link.to } 
+					key={ link.name } 
+					className={ ({ isActive } ) => setActiveStatus(isActive) }
+				> { t(link.name) }</NavLink>) }
 		</>
 	);
 };
