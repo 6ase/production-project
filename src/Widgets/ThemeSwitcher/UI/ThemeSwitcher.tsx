@@ -7,7 +7,7 @@ import DayIcon from 'Shared/assets/icons/DayIcon.svg';
 import NightIcon from 'Shared/assets/icons/NightIcon.svg';
 
 export const ThemeSwitcher = () => {   
-	const {theme, changeTheme} = useTheme();
+	const { theme, changeTheme } = useTheme();
 	return (
     
 		<ThemeButton onClick={changeTheme} theme={ThemeButtonStyle.CLEAR}>

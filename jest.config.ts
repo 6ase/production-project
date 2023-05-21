@@ -30,9 +30,7 @@ export default {
 		'\\\\node_modules\\\\'
 	],
 	coverageProvider: 'babel',
-	moduleDirectories: [
-		'node_modules'
-	],
+	moduleDirectories: [ 'node_modules', 'src' ],
 	moduleFileExtensions: [
 		'js',
 		'mjs',
@@ -48,6 +46,9 @@ export default {
 		'**/__tests__/**/*.[jt]s?(x)',
 		'**/?(*.)+(spec|test).[tj]s?(x)'
 	],
+	moduleNameMapper: {
+		'\\.(css|scss)$': 'identity-obj-proxy'
+	}
 
 	// A list of reporter names that Jest uses when writing coverage reports
 	// coverageReporters: [

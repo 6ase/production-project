@@ -1,4 +1,3 @@
-import React from 'react';
 import { classNames } from 'Shared/Lib/classNames';
 import cls from './LangSwitcher.module.scss';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +8,7 @@ export const LangSwitcher = () => {
 	const { i18n } = useTranslation();
 	const lang = i18n.language;
 
-	const changeLang = () => {
+	const changeLang = (): void => {
 		i18n.changeLanguage(lang === 'ru'? 'en': 'ru');
 	};
 	return (

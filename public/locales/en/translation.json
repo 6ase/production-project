@@ -6,5 +6,7 @@
 	"Главная страница": "Main Page",
 	"Главная": "Main",
 	"Toggle": "Toggle",
-	"NotFound": "Page is not Found"
+	"NotFound": "Page is not Found",
+	"WrongPage": "Something went wrong",
+	"reload": "reload"
 }
