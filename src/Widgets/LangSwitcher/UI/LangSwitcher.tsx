@@ -1,8 +1,7 @@
-import { classNames } from 'Shared/Lib/classNames';
-import cls from './LangSwitcher.module.scss';
 import { useTranslation } from 'react-i18next';
 import En from 'Shared/assets/icons/en.svg';
 import Ru from 'Shared/assets/icons/ru.svg';
+import Button, { ButtonStyle } from 'Shared/UI/SwitchThemeButton/UI/Button';
 
 export const LangSwitcher = () => {
 	const { i18n } = useTranslation();
@@ -12,8 +11,9 @@ export const LangSwitcher = () => {
 		i18n.changeLanguage(lang === 'ru'? 'en': 'ru');
 	};
 	return (
-		<button onClick={changeLang} className={classNames(cls.switcher)}> { lang === 'ru'? <En/> :<Ru/> }
-		</button>
+		<Button onClick={changeLang} theme={ButtonStyle.SWITCHER}>
+			{ lang === 'ru'? <En/> :<Ru/> }
+		</Button>
 	);
 };
 

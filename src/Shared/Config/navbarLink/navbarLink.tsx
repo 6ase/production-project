@@ -8,19 +8,19 @@ type NavLinkPropsExtended = NavLinkProps & {
     name: string;
   };
 export const LinkPath: Record<Links, string> = {
-	[ Links.MAIN ] : '/',
-	[ Links.ABOUT ] : 'about'
+	[ Links.MAIN ]: '/',
+	[ Links.ABOUT ]: 'about'
 };
 export const LinkNames: Record<Links, string> = {
-	[ Links.MAIN ] : 'Главная',
-	[ Links.ABOUT ] : 'О проекте'
+	[ Links.MAIN ]: 'Главная',
+	[ Links.ABOUT ]: 'О проекте'
 };
 export const LinksConfig: Record<Links, NavLinkPropsExtended> = {
-	[ Links.MAIN ] : {
+	[ Links.MAIN ]: {
 		to: LinkPath.main,
 		name: LinkNames.main,
 	},
-	[ Links.ABOUT ] : {
+	[ Links.ABOUT ]: {
 		to: LinkPath.about,
 		name: LinkNames.about,
 	},

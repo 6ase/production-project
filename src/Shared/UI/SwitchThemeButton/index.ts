@@ -1,4 +1,4 @@
-import   ThemeButton from './UI/ThemeButton';
+import   ThemeButton from './UI/Button';
 
 export {
 	ThemeButton,

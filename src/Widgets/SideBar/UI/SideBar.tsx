@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { classNames } from 'Shared/Lib/classNames';
 import cls from './SideBar.module.scss';
 import { useTranslation } from 'react-i18next';
+import Button, { ButtonStyle } from 'Shared/UI/SwitchThemeButton/UI/Button';
 
 export const SideBar = () => {
     
@@ -12,9 +13,8 @@ export const SideBar = () => {
 	};
 	return (
 		<div data-testid='side_bar' className={classNames(cls.SideBar, { [ cls.active ]: active })}>
-			<button data-testid='toggle_button'
-				onClick={onToggle}>{t('Toggle')}
-			</button>
+			<Button data-testid='toggle_button' theme={ButtonStyle.TOOGLE}
+				onClick={onToggle} >{t('Toggle')} </Button>
 		</div>
 	);
 };

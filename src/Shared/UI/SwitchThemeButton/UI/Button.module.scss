@@ -1,8 +1,5 @@
 .Button {
     cursor: pointer;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
     background-color: var(--theme-icon-color);
     border-color:var(--theme-icon-color) ;
 }
@@ -12,4 +9,14 @@
     margin: 0;
     outline: none;
     border: none;
+}
+
+.switcher {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.toogle {
+    color:var(--primary-color)
 }

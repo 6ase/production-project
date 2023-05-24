@@ -12,6 +12,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 		super(props);
 		this.state = { hasError: false };
 	}
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	static getDerivedStateFromError(error: Error) {
 		// Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
 		return { hasError: true };
