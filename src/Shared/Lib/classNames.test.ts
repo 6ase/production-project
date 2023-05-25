@@ -1,4 +1,3 @@
-import { describe } from 'node:test';
 import { classNames } from './classNames';
 
 describe('Тестирование classNames()', () => {
