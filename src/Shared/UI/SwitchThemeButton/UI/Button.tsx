@@ -14,6 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
 }
 const Button: FC<ButtonProps> = (props) => {
 	const {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		className,
 		children,
 		theme,
