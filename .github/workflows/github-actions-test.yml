@@ -27,4 +27,4 @@ jobs:
       - name: unit testing
         run: npm run test:jest
       - name: visual testing
-        run: chromatic:CI
+        run: npm run chromatic:CI
