@@ -17,10 +17,10 @@ export function buildPlugins ({ paths, isDev }: BuildOptions): webpack.WebpackPl
 		new DefinePlugin({
 			__IS_DEV__: JSON.stringify(isDev)
 		}),
-		new BundleAnalyzerPlugin()
+		new ReactRefreshPlugin()
 	];
 	if(isDev){
-		plugins.push(new ReactRefreshPlugin());
+		plugins.push(new BundleAnalyzerPlugin({ openAnalyzer: false }));
 		plugins.push(new webpack.HotModuleReplacementPlugin());
 		
 	}
