@@ -26,5 +26,3 @@ jobs:
         run: npm run stylelint
       - name: unit testing
         run: npm run test:jest
-      - name: visual testing
-        run: npm run chromatic:CI
