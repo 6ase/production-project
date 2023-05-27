@@ -3,6 +3,8 @@
  * https://jestjs.io/docs/configuration
  */
 
+import path from 'path';
+
 export default {
 	// All imported modules in your tests should be mocked automatically
 	// automock: false,
@@ -47,8 +49,10 @@ export default {
 		'**/?(*.)+(spec|test).[tj]s?(x)'
 	],
 	moduleNameMapper: {
-		'\\.(css|scss)$': 'identity-obj-proxy'
-	}
+		'\\.(css|scss)$': 'identity-obj-proxy',
+		'\\.svg': path.resolve(__dirname, 'jestEmptyComponent.tsx')
+	},
+	
 
 	// A list of reporter names that Jest uses when writing coverage reports
 	// coverageReporters: [

@@ -7,6 +7,7 @@ import { Navbar } from 'Widgets/Navbar';
 import { SideBar } from 'Widgets/SideBar';
 
 
+
 const App = () => {
 	const { theme } = useTheme();
 	return (

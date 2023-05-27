@@ -9,3 +9,17 @@
     text-decoration: none;
     color: var(--link-color)
 }
+
+.link {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.activeIcon {
+    font-weight: bold;
+}
+
+
+

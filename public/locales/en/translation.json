@@ -1,10 +1,10 @@
 {
 	"Добро пожаловать в React": "Welcome to React",
 	"Перевести": "Translate",
-	"О проекте": "About",
+	"О проекте": "  About",
 	"Загрузка": "....Loading",
 	"Главная страница": "Main Page",
-	"Главная": "Main",
+	"Главная": "  Main",
 	"Toggle": "Toggle",
 	"NotFound": "Page is not Found",
 	"WrongPage": "Something went wrong",
