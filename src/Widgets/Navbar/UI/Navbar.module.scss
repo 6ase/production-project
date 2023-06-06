@@ -2,10 +2,10 @@
     width: 100%;
     height: var(--nav-bar-height);
     display: flex;
-    justify-content: space-around;
-    justify-items: center;
+    justify-content:flex-end;
     align-items: center;
     background: var(--bg-inverted-color);
+    margin-right: 20px;
 }
 
 

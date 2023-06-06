@@ -8,5 +8,7 @@
 	"Toggle": "Toggle",
 	"NotFound": "Page is not Found",
 	"WrongPage": "Something went wrong",
-	"reload": "reload"
+	"reload": "reload",
+	"SignIn": "SignIn",
+	"SignUp": "SignUp"
 }

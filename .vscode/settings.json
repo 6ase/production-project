@@ -6,7 +6,12 @@
     "less.validate": false,
     "scss.validate": false,
     "stylelint.enable": true,
-    "stylelint.validate": ["css", "scss"]
+    "stylelint.validate": [
+        "css",
+        "scss"
+    ],
+    "CodeGPT.query.language": "Russian",
+    "i18n-ally.keystyle": "nested"
     
 
 }
