@@ -6,6 +6,7 @@ import { Router } from './Providers/Router';
 import { Navbar } from 'Widgets/Navbar';
 import { SideBar } from 'Widgets/SideBar';
 import { Modal } from 'Shared/UI/Modal';
+import { ReduxProvider } from './Providers/ReduxProvider';
 
 
 
@@ -14,16 +15,18 @@ const App = () => {
 	const [ active, setActive ] = useState(false);
 	
 	return (
-		<Suspense fallback=''>
-			<div className={classNames('app', { }, [ theme ])}>
-				<Modal isActive={active} setActive={setActive}/>
-				<Navbar setActive={setActive}/>
-				<div className="content-page">
-					<SideBar/>
-					<Router/>
+		<ReduxProvider>
+			<Suspense fallback=''>
+				<div className={classNames('app', { }, [ theme ])}>
+					<Modal isActive={active} setActive={setActive}/>
+					<Navbar setActive={setActive}/>
+					<div className="content-page">
+						<SideBar/>
+						<Router/>
+					</div>
 				</div>
-			</div>
-		</Suspense>
+			</Suspense>
+		</ReduxProvider>
 	);
 };
 
