@@ -10,5 +10,7 @@
 	"WrongPage": "Something went wrong",
 	"reload": "reload",
 	"SignIn": "SignIn",
-	"SignUp": "SignUp"
+	"SignUp": "SignUp",
+	"increment": "increment",
+	"decrement": "decrement"
 }

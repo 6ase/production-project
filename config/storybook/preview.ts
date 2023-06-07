@@ -2,11 +2,11 @@ import type { Preview } from '@storybook/react';
 import { styleDecorator } from './decorators/styleDecorator';
 import { themeDecorator } from './decorators/themeDecorator';
 import { routerDecorator } from './decorators/routerDecorator';
-import { withI18next } from './decorators/i18nDecorator';
+import { useWithI18next } from './decorators/i18nDecorator';
 import '../../src/Widgets/Loader/UI/Loader.css';
 
 const preview: Preview = {
-	decorators: [ styleDecorator, themeDecorator, routerDecorator, withI18next ],
+	decorators: [ styleDecorator, themeDecorator, routerDecorator, useWithI18next ],
 };
 export const globalTypes = {
 	theme: {

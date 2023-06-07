@@ -4,7 +4,7 @@ import i18n from '../../../src/Shared/Config/i18n/i18n_StoryBook';
 import { Decorator } from '@storybook/react';
  
 // Wrap your stories in the I18nextProvider component
-export const withI18next: Decorator = (Story, context) => {
+export const useWithI18next: Decorator = (Story, context) => {
 	const { locale } = context.globals;
 	// When the locale global changes
 	// Set the new locale in i18n

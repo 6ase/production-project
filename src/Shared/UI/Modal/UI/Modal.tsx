@@ -12,17 +12,18 @@ const Module:React.FC<ModalProps> = ({ isActive, setActive }) => {
 		e.stopPropagation();
 	}, []);
 
-	const closeModal = useCallback(() => setActive(false), []);
+	const closeModal = useCallback(() => setActive(false), [ setActive ]);
 
 	const onKeyDown = useCallback((e: KeyboardEvent) => {
 		if(e.key === 'Escape') closeModal();
-	}, []);
+	}, [ closeModal ]);
+	
 	useEffect(() => {
 		if(isActive) {
 			window.addEventListener('keydown', onKeyDown);
 			window.removeEventListener('keydown', onkeydown);
 		}
-	}, [ isActive ]);
+	}, [ isActive, onKeyDown ]);
 	return (
 		<div className={classNames(cls.background, { [ cls.active ]: isActive })} 
 			onClick={closeModal}>

@@ -52,6 +52,7 @@
     "eslint-config-xo-typescript": "^0.57.0",
     "eslint-plugin-i18next": "^6.0.1",
     "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.12",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
@@ -75,6 +76,7 @@
   },
   "dependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/react-router-dom": "^5.3.3",
     "@types/webpack-dev-server": "^4.7.2",
     "i18next": "^22.4.15",
@@ -83,6 +85,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^12.2.2",
+    "react-redux": "^8.0.7",
     "react-router-dom": "^6.11.1",
     "ts-loader": "^9.2.6",
     "webpack-dev-server": "^4.7.4"

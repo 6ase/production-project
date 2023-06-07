@@ -11,7 +11,7 @@ module.exports = {
 		'ecmaVersion': 'latest',
 		'sourceType': 'module'
 	},
-	'plugins': [ 'react', '@typescript-eslint', 'i18next' ],
+	'plugins': [ 'react', '@typescript-eslint', 'i18next', 'react-hooks' ],
 	'rules': {
 		'indent': [ 'error', 'tab' ],
 		'linebreak-style': [ 'error', 'windows' ],
@@ -30,5 +30,7 @@ module.exports = {
 		'@typescript-eslint/ban-ts-comment': 'off',
 		'react/react-in-jsx-scope': 'off',
 		'i18next/no-literal-string': 2,
+		'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+		'react-hooks/exhaustive-deps': 'error'
 	}
 };
