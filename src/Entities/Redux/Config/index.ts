@@ -1,5 +1,11 @@
-import { store } from './UI/Store';
-
+import { createReduxStore } from './UI/Store';
+import { CounterShema, StateShema } from './UI/StateSchema';
+import { getCounter } from './selectors/getCounter';
+import { getCounterValue } from './selectors/getCounterValue';
 export {
-	store
+	createReduxStore,
+	CounterShema,
+	StateShema,
+	getCounter,
+	getCounterValue
 };

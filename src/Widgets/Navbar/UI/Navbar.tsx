@@ -11,8 +11,8 @@ const Navbar:React.FC<NavBarProps> = ({ setActive }) => {
 	const { t } = useTranslation();
 	return (
 		<div className={classNames(cls.nav)}>
-			<Button onClick={() => setActive(true)} theme='navBarButtons'>{t('SignIn')}</Button>
-			<Button onClick={() => setActive(true)} theme='navBarButtons'>{t('SignUp')}</Button>
+			<Button onClick={() => setActive(true)} theme='inverseThemeButtons'>{t('SignIn')}</Button>
+			<Button onClick={() => setActive(true)} theme='inverseThemeButtons'>{t('SignUp')}</Button>
 		</div>
 	);
 };

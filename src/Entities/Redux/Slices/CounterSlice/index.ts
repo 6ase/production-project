@@ -1,9 +1,7 @@
-import { increment, decrement, incrementByAmount } from './UI/CounterSlice';
-import counterReducer from './UI/CounterSlice';
+import { counterActions, counterReducer } from './UI/CounterSlice';
+
 
 export {
-	increment,
-	decrement,
-	incrementByAmount,
+	counterActions,
 	counterReducer
 };
