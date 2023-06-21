@@ -9,6 +9,7 @@ import { Modal } from 'Shared/UI/Modal';
 import { useSelector } from 'react-redux';
 import { getIsModalActive } from 'Entities/Redux/Config';
 
+
 const App = () => {
 	const { theme } = useTheme();
 	const active = useSelector(getIsModalActive);
@@ -17,7 +18,7 @@ const App = () => {
 		<Suspense fallback=''>
 			<div className={classNames('app', { }, [ theme ])}>
 				<Modal isActive={active} />
-				<Navbar />
+				<Navbar/>
 				<div className="content-page">
 					<SideBar/>
 					<Router/>

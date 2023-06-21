@@ -9,7 +9,6 @@ export const ThemeSwitcher = () => {
 	const { theme, changeTheme } = useTheme();
 	
 	return (
-    
 		<Button onClick={changeTheme} theme={ButtonStyle.SWITCHER} >
 			{theme === Theme.DARK? <DayIcon/>:<NightIcon/>} 
 		</Button>
