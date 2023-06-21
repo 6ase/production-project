@@ -6,27 +6,24 @@ import { Router } from './Providers/Router';
 import { Navbar } from 'Widgets/Navbar';
 import { SideBar } from 'Widgets/SideBar';
 import { Modal } from 'Shared/UI/Modal';
-import { ReduxProvider } from './Providers/ReduxProvider';
-
-
+import { useSelector } from 'react-redux';
+import { getIsModalActive } from 'Entities/Redux/Config';
 
 const App = () => {
 	const { theme } = useTheme();
-	const [ active, setActive ] = useState(false);
-	
+	const active = useSelector(getIsModalActive);
+		
 	return (
-		<ReduxProvider>
-			<Suspense fallback=''>
-				<div className={classNames('app', { }, [ theme ])}>
-					<Modal isActive={active} setActive={setActive}/>
-					<Navbar setActive={setActive}/>
-					<div className="content-page">
-						<SideBar/>
-						<Router/>
-					</div>
+		<Suspense fallback=''>
+			<div className={classNames('app', { }, [ theme ])}>
+				<Modal isActive={active} />
+				<Navbar />
+				<div className="content-page">
+					<SideBar/>
+					<Router/>
 				</div>
-			</Suspense>
-		</ReduxProvider>
+			</div>
+		</Suspense>
 	);
 };
 

@@ -1,32 +1,34 @@
 import React, { useCallback, useEffect } from 'react';
 import { classNames } from 'Shared/Lib/classNames';
 import cls from './Modal.module.scss';
+import { useDispatch } from 'react-redux';
+import { modalActiveActions } from 'Entities/Redux/Slices/ModalActiveSlice';
 
 type ModalProps = {
-	isActive:boolean;
-	setActive: (state:boolean) => void;
+	isActive: boolean;
 }
-const Module:React.FC<ModalProps> = ({ isActive, setActive }) => {
+const Module:React.FC<ModalProps> = ({ isActive }) => {
 
-	const onContentClick = useCallback((e:React.MouseEvent) => {
+	const onContentClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
 	}, []);
+	const dispatch = useDispatch();
+	const changeActive = () => dispatch(modalActiveActions.changeActive());
+	
 
-	const closeModal = useCallback(() => setActive(false), [ setActive ]);
-
-	const onKeyDown = useCallback((e: KeyboardEvent) => {
-		if(e.key === 'Escape') closeModal();
-	}, [ closeModal ]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const onKeyDown = (e: KeyboardEvent) => {
+		if(e.key === 'Escape') changeActive();
+	};
 	
 	useEffect(() => {
 		if(isActive) {
 			window.addEventListener('keydown', onKeyDown);
-			window.removeEventListener('keydown', onkeydown);
-		}
+		} else window.removeEventListener('keydown', onKeyDown);
 	}, [ isActive, onKeyDown ]);
 	return (
 		<div className={classNames(cls.background, { [ cls.active ]: isActive })} 
-			onClick={closeModal}>
+			onClick={changeActive}>
 			<div className={classNames(cls.content, { [ cls.contentOpen ]: isActive })} 
 				// eslint-disable-next-line i18next/no-literal-string
 				onClick={onContentClick}><h1>Тут будет форма</h1></div>
