@@ -8,24 +8,25 @@ type ModalProps = {
 	isActive: boolean;
 }
 const Module:React.FC<ModalProps> = ({ isActive }) => {
-
+    
+	const dispatch = useDispatch();
+	const changeActive = useCallback(() => dispatch(modalActiveActions.changeActive()), [ dispatch ]);
+	
 	const onContentClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();
 	}, []);
-	const dispatch = useDispatch();
-	const changeActive = () => dispatch(modalActiveActions.changeActive());
 	
-
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const onKeyDown = (e: KeyboardEvent) => {
+	const onKeyDown = useCallback((e: KeyboardEvent) => {
 		if(e.key === 'Escape') changeActive();
-	};
+	}, [ changeActive ]);
 	
 	useEffect(() => {
 		if(isActive) {
 			window.addEventListener('keydown', onKeyDown);
-		} else window.removeEventListener('keydown', onKeyDown);
+		}  
+		return () => window.removeEventListener('keydown', onKeyDown);
 	}, [ isActive, onKeyDown ]);
+	
 	return (
 		<div className={classNames(cls.background, { [ cls.active ]: isActive })} 
 			onClick={changeActive}>
