@@ -18,14 +18,16 @@ const MainPage = () => {
 	const decrease = () => dispatch(counterActions.decrement());
 	return (
 		<>
-			<div className={classNames(cls.header)}>
+			<div data-testid='main_page_header' className={classNames(cls.header)}>
 				{ t('Главная страница') }
 			</div>
 			
-			<div className={classNames(cls.content)}>
-				{count}
-				<Button onClick={increase} theme='inverseThemeButtons'>{t('increment')}</Button>
-				<Button onClick={decrease} theme='inverseThemeButtons'>{t('decrement')}</Button>
+			<div data-testid='main_page_content' className={classNames(cls.content)}>
+				<span data-testid='count'>{count}</span>
+				<Button onClick={increase} data-testid='increment_button' 
+					theme='inverseThemeButtons'>{t('increment')}</Button>
+				<Button onClick={decrease} data-testid='decrement_button'
+					theme='inverseThemeButtons'>{t('decrement')}</Button>
 			</div>
 		</>
 	);

@@ -2,6 +2,9 @@
 import path from 'path';
 
 export default {
+	globals: {
+		__IS_DEV__: true,
+	},
 	coveragePathIgnorePatterns: [
 		'<rootDir>\\\\node_modules\\\\'
 	],
@@ -25,5 +28,5 @@ export default {
 	moduleNameMapper: {
 		'\\.(css|scss)$': 'identity-obj-proxy',
 		'\\.svg': path.resolve(__dirname, 'jestEmptyComponent.tsx')
-	},
+	}
 };
