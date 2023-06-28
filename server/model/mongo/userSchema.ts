@@ -12,4 +12,4 @@ const userSchema = new Schema<IUser>({
 	accesTokens: [ String ],
 });
 
-module.exports = model('User', userSchema);
+export default model('User', userSchema);
