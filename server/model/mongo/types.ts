@@ -1,10 +1,10 @@
 export interface IUser {
- firstName: string,
- lastName: string,
- fathersName: string,
+ _id: string,
  userEmail: string,
- salt: string,
+ isActivated: boolean,
+ activationLink: string,
  password: string,
- refreshTokens: [ string ],
- accesTokens: [ string ]
+ refreshTokens?: [ string ],
+ accesTokens?: [ string ],
+ save: ()=> void
 }

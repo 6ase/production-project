@@ -2,20 +2,23 @@ import express, { Express } from 'express';
 import * as dotenv from 'dotenv';
 import { userRouter } from './routes/userRouter';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT;
+const BACKEND_URL = process.env.BACKEND_URL;
+const PORT = process.env.PORT;
 
 app.use(cors({
 	credentials: true,
 	origin: true,
 }));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use('/user', userRouter)
-app.listen(port, () => {
-	console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(PORT, () => {
+	console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`);
 });

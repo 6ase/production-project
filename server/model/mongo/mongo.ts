@@ -22,7 +22,13 @@ mongoose.connection.on('error', (err) => {
 
 const findUserByEmail = (email: string): Promise<IUser | null> => user.findOne({ userEmail: email })
 
-export default{
+const findUserByLink = (link: string): Promise<IUser | null> => user.findOne({ activationLink: link })
+
+const createUser = (userData:object): Promise<IUser | null> => user.create(userData);
+
+export default {
 	db,
 	findUserByEmail,
+	findUserByLink,
+	createUser,
 }
