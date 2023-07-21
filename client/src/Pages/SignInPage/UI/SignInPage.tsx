@@ -5,10 +5,12 @@ import Button from 'Shared/UI/SwitchThemeButton/UI/Button';
 import { useTranslation } from 'react-i18next';
 import { MyForm } from 'Shared/UI/MyForm';
 import { MyInput } from 'Shared/UI/Modal/MyInput';
+import { ServerErr } from 'Pages/SignUpPage/UI/SignUpPage';
+import { ErrorMsgComponent } from 'Shared/UI/ErrorMsgComponent';
 
 const SignInPage = () => {
 	const { t } = useTranslation();
-	const [ err, setErr ] = useState(null);
+	const [ serverResponse, setServerResponse ] = useState(null);
 	const [ input, setInput ] = useState({
 		email: '',
 		password: '',
@@ -27,18 +29,23 @@ const SignInPage = () => {
 			body: JSON.stringify(input),
 			credentials: 'include',
 		});
-		if (response.ok) {
-			const data = await response.json();
-			console.log(data);
-			setErr(null);
-		} else {
+		if(response.ok) {
 			const answer = await response.json();
-			setErr(answer.error);
+			console.log(answer);
+			setServerResponse([ `Добро пожаловать ${answer.name}!` ]);
+		}
+		else {
+			const err = (await response.json()).error;
+			if( typeof err === 'string'){
+				setServerResponse([ err ]);
+				console.log(err);
+			}
+			else setServerResponse(err.map((err:ServerErr) => err.msg ));
 		}
 	};
 	return (
 		<MyForm onSubmit={submitHandler} >
-			{ err? err : ''}
+			{ serverResponse? <ErrorMsgComponent error={serverResponse}/> :''}
 			<h1>{t('Authorization')}</h1>
 			<MyInput name='email' placeholder='example@google.com' type='email' onChange={changeHandler} value={ input.email } />
 			<MyInput name='password' placeholder='Пароль' type='password' onChange={changeHandler} value={ input.password }/>
