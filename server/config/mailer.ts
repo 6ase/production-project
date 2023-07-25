@@ -1,6 +1,4 @@
 import nodemailer from 'nodemailer';
-import * as dotenv from 'dotenv';
-dotenv.config();
 
 const sendMail = (to: String, activationLink: String) => {
     const transporter = nodemailer.createTransport({

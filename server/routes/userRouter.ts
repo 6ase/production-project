@@ -2,13 +2,14 @@ import express from 'express';
 import { Request, Response } from 'express';
 import mongo  from '../model/mongo';
 import bcrypt from 'bcrypt';
-import auth from '../config/auth'
+import tokenService from '../service/tokenService'
 import mailer from '../config/mailer';
-import * as dotenv from 'dotenv';
 const uuid = require('uuid');
 import { Result, ValidationError, body, validationResult } from 'express-validator';
-
+import * as dotenv from 'dotenv';
+import UserDto from '../service/userDto';
 dotenv.config();
+
 
 const router = express.Router();
 
@@ -31,14 +32,11 @@ router.post('/signin',
     const user = await mongo.findUserByEmail(userEmail);
     if(!user) return res.status(401).send({ error: 'Пользователь не зарегистрирован' });
     const isPassEquals = await bcrypt.compare(password, user.password)
-    if (!isPassEquals) return res.status(401).send({error: 'Неверный пароль'})
-    const tokens = await auth.signToken({ 
-        name: user.name,
-        email,
-        id: user._id,
-        isActivated: user.isActivated});
+    if (!isPassEquals) return res.status(401).send({error: 'Неверный логин или пароль'})
+    const userDto = new UserDto(user);
+    const tokens = await tokenService.signToken({...userDto});
     res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
-    //Продумать алгоритм сохранения в базу данных токена
+    await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
     return res.status(200).send({ id: user._id, name: user.name, tokens })
 });
 router.post('/signup',
@@ -61,15 +59,29 @@ router.post('/signup',
     const link = uuid.v4();
     const userData = { userEmail, name, password: hashPassword, activationLink: link, isActivated: false }
     const user = await mongo.createUser(userData);
-    await mailer.sendMail(userEmail, `${process.env.BACKEND_URL}/user/activate/${link}`)
-    const tokens = await auth.signToken({ 
-        name,
-        email,
-        id: user?._id,
-        isActivated: user?.isActivated});
+    await mailer.sendMail(userEmail, `${process.env.BACKEND_URL}/user/activate/${link}`);
+    const userDto = new UserDto(user);
+    const tokens = await tokenService.signToken({...userDto});
+    
     res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
-    //Продумать алгоритм сохранения в базу данных токена
+    await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
     return res.status(200).send({ id:user?._id, tokens })
 });
-
+router.post('/refresh', async (req: Request, res: Response) => {
+    const { refreshToken } = req.cookies;
+    if(!refreshToken) return res.status(401).send({ error: 'Пользователь не авторизован' })
+    const userData = await tokenService.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET);
+    const tokenFromDb = await mongo.findToken(refreshToken);
+    if(userData && tokenFromDb) {
+        const user = await mongo.findUserByEmail(userData.email);
+        if(user){
+            const userDto = new UserDto(user);
+            const tokens = await tokenService.signToken({...userDto});
+            res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+            await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
+            return res.status(200).send({ id:user?._id, tokens })
+        }
+    return res.status(401).send({ error: 'Пользователь не авторизован' })
+    }
+})
 export {router as userRouter}

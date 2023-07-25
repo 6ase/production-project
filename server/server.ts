@@ -1,9 +1,8 @@
 import express, { Express } from 'express';
-import * as dotenv from 'dotenv';
 import { userRouter } from './routes/userRouter';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-
+import dotenv from 'dotenv';
 dotenv.config();
 
 const app: Express = express();

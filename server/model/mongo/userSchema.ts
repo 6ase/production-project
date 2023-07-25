@@ -8,7 +8,6 @@ const userSchema = new Schema<IUser>({
 	isActivated: Boolean,
 	activationLink: String,
 	refreshTokens: [ String ],
-	accesTokens: [ String ],
 });
 
 export default model('User', userSchema);
