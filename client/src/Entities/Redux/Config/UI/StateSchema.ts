@@ -8,4 +8,15 @@ export interface ActiveShema {
 export interface StateShema {
     counter: CounterShema,
     modal: ActiveShema
+    user: UserData,
+}
+export interface UserSchema {
+    id: string,
+    name: string,
+    email: string,
+    isActivated: boolean
+
+}
+export interface UserData {
+    userData?: UserSchema
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { classNames } from 'Shared/Lib/classNames';
 import cls from './SignUpPage.module.scss';
 import Button from 'Shared/UI/SwitchThemeButton/UI/Button';
@@ -6,6 +6,10 @@ import { useTranslation } from 'react-i18next';
 import { MyForm } from 'Shared/UI/MyForm';
 import { MyInput } from 'Shared/UI/Modal/MyInput';
 import ErrorMsgComponent, { ErrorMsgComponentProps } from 'Shared/UI/ErrorMsgComponent/UI/ErrorMsgComponent';
+import AuthService from 'Features/services/AuthService';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfo } from 'Entities/Redux/Config';
+import { userActions } from 'Entities/Redux/Slices/UserSlice';
 
 
 export interface ServerErr {
@@ -22,24 +26,23 @@ const SignUpPage = () => {
 		confirmPassword: ''
 	});
 	const [ serverResponse, setServerResponse ] = useState(null);
-	const backendURL = 'http://localhost:4000/user/signup';
 	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>{
 		setInput((prev)=>({ ...prev, [ e.target.name ]: e.target.value }));
 	};
-	const submitHandler = async(e:React.FormEvent<HTMLFormElement>)=>{
+	const dispatch = useDispatch();
+	const setUser = useCallback((user) => dispatch(userActions.setUserInfo(user)), [ dispatch ]);
+	const submitHandler = async(e:React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response = await fetch(backendURL, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			body: JSON.stringify(input),
-			credentials: 'include',
-		});
-		if(response.ok) setServerResponse([ `Регистрация прошла успешно!
-		 На ${input.email} отправлена инструкция по активации аккаунта` ]);
-		else {
-			const err = (await response.json()).error;
+		try {
+			const response = await AuthService.registration(input);
+			setServerResponse([ `Регистрация прошла успешно!
+					 На ${input.email} отправлена инструкция по активации аккаунта` ]);
+			localStorage.setItem('token', response.data.refreshToken);
+			setUser(response.data.user);
+			console.log(response.data.user);
+		} catch (error) {
+			
+			const err = error.response.data.error;
 			if( typeof err === 'string'){
 				setServerResponse([ err ]);
 				console.log(err);

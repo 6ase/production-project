@@ -8,7 +8,7 @@ import { ReduxProvider } from 'App/Providers/ReduxProvider';
 
 describe('Тест MainPage', () => {
 	test('Проверяем наличие стейта на странице',  () => {
-		const initialState = { counter: { value: 10 }, modal: { isActive: false, content: '' } };
+		const initialState = { counter: { value: 10 }, modal: { isActive: false, content: '' }, user: {} };
 		render(
 			<ReduxProvider initialState={initialState}>
 				<I18nextProvider i18n={i18n}>
@@ -21,7 +21,7 @@ describe('Тест MainPage', () => {
 		expect(screen.getByTestId('count')).toHaveTextContent('10');
 	});
 	test('Проверяем работу increment',  () => {
-		const initialState = { counter: { value: 10 }, modal: { isActive: false, content: '' } };
+		const initialState = { counter: { value: 10 }, modal: { isActive: false, content: '' }, user: {} };
 		render(
 			<ReduxProvider initialState={initialState}>
 				<I18nextProvider i18n={i18n}>
@@ -36,7 +36,7 @@ describe('Тест MainPage', () => {
 		expect(screen.getByTestId('count')).toHaveTextContent('21');
 	});
 	test('Проверяем работу decrement',  () => {
-		const initialState = { counter: { value: 10 }, modal: { isActive: false, content: '' } };
+		const initialState = { counter: { value: 10 }, modal: { isActive: false, content: '' }, user: {} };
 		render(
 			<ReduxProvider initialState={initialState}>
 				<I18nextProvider i18n={i18n}>

@@ -32,9 +32,15 @@ const checkAndUpdateUserRefreshTokens = async(user:IUser, tokens: JwtPayload): P
     }
     await user.save();
 }
+const removeToken = async(user:IUser, token:string): Promise<IUser> =>{
+    user.refreshTokens = user.refreshTokens.filter((refreshToken)=> refreshToken !== token)
+    await user.save()
+    return user;
+}
 
 export default {
     signToken,
     verifyToken,
-    checkAndUpdateUserRefreshTokens
+    checkAndUpdateUserRefreshTokens,
+    removeToken
 }

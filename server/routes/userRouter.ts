@@ -8,6 +8,7 @@ const uuid = require('uuid');
 import { Result, ValidationError, body, validationResult } from 'express-validator';
 import * as dotenv from 'dotenv';
 import UserDto from '../service/userDto';
+import { IUser } from '../model/mongo/types';
 dotenv.config();
 
 
@@ -37,7 +38,7 @@ router.post('/signin',
     const tokens = await tokenService.signToken({...userDto});
     res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
-    return res.status(200).send({ id: user._id, name: user.name, tokens })
+    return res.status(200).send({ tokens, user: userDto })
 });
 router.post('/signup',
         body('name').isLength({ min:2, max: 20 })
@@ -48,6 +49,7 @@ router.post('/signup',
         .withMessage('Пароль должен быть от 6 до 20 символов, содержать одну заглавную букву и иметь хотя бы одну цифру'),
         async (req: Request, res: Response) => {
     const { name, email, password, confirmPassword } = req.body;
+    console.log(req.body)
     const errors: Result<ValidationError> = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).send({ error: errors.array() });
     if(!email || !password || !confirmPassword) return res.status(422).send({ error: 'Не все обязательные поля введены.' });
@@ -65,7 +67,7 @@ router.post('/signup',
     
     res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
     await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
-    return res.status(200).send({ id:user?._id, tokens })
+    return res.status(200).send({ tokens, user: userDto })
 });
 router.post('/refresh', async (req: Request, res: Response) => {
     const { refreshToken } = req.cookies;
@@ -76,12 +78,23 @@ router.post('/refresh', async (req: Request, res: Response) => {
         const user = await mongo.findUserByEmail(userData.email);
         if(user){
             const userDto = new UserDto(user);
-            const tokens = await tokenService.signToken({...userDto});
+            const tokens = await tokenService.signToken({ ...userDto });
             res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
             await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
-            return res.status(200).send({ id:user?._id, tokens })
+            return res.status(200).send({ tokens, user: userDto })
         }
     return res.status(401).send({ error: 'Пользователь не авторизован' })
     }
+router.get('/logout', async (req: Request, res: Response) => {
+    const { refreshToken } = req.cookies;
+    const userInfo = await tokenService.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET)
+    const user = await mongo.findUserByEmail(userInfo?.email)
+    if(user){
+        res.clearCookie('refreshToken')
+        await tokenService.removeToken(user, refreshToken)
+        return res.status(200);
+    }
+    })
+    return res.status(401).send({ error: 'Пользователь не авторизован' })
 })
-export {router as userRouter}
+export { router as userRouter }

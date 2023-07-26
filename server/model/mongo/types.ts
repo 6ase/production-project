@@ -5,7 +5,7 @@ export interface IUser {
  isActivated: boolean,
  activationLink: string,
  password: string,
- refreshTokens: [ string ],
+ refreshTokens: string [],
  save: () => void
 }
 export interface UserDto {

@@ -13,5 +13,6 @@
 	"SignUp": "Регистрация",
 	"increment": "увеличить",
 	"decrement": "уменьшить",
-	"Authorization":"Авторизация"
+	"Authorization": "Авторизация",
+	"LogOut": "Выйти"
 }

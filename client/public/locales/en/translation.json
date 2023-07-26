@@ -13,5 +13,6 @@
 	"SignUp": "SignUp",
 	"increment": "increment",
 	"decrement": "decrement",
-	"Authorization":"Authorization"
+	"Authorization": "Authorization",
+	"LogOut": "Logout"
 }

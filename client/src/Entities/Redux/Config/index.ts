@@ -1,9 +1,10 @@
 import { createReduxStore } from './UI/Store';
 import { CounterShema, StateShema,   } from './UI/StateSchema';
-import { getCounter } from './selectors/getCounter';
-import { getCounterValue } from './selectors/getCounterValue';
-import { getIsModalActive } from './selectors/getIsModalActive';
-import { getModalContent } from './selectors/getModalContent';
+import { getCounter } from './selectors/counter/getCounter';
+import { getCounterValue } from './selectors/counter/getCounterValue';
+import { getIsModalActive } from './selectors/modal/getIsModalActive';
+import { getModalContent } from './selectors/modal/getModalContent';
+import { getUserInfo } from './selectors/user/getUserInfo';
 export {
 	createReduxStore,
 	CounterShema,
@@ -11,5 +12,6 @@ export {
 	getCounter,
 	getCounterValue,
 	getIsModalActive,
-	getModalContent
+	getModalContent,
+	getUserInfo
 };
