@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { classNames } from 'Shared/Lib/classNames';
 import cls from './SignInPage.module.scss';
 import Button from 'Shared/UI/SwitchThemeButton/UI/Button';
@@ -7,6 +7,9 @@ import { MyForm } from 'Shared/UI/MyForm';
 import { MyInput } from 'Shared/UI/Modal/MyInput';
 import { ServerErr } from 'Pages/SignUpPage/UI/SignUpPage';
 import { ErrorMsgComponent } from 'Shared/UI/ErrorMsgComponent';
+import AuthService from 'Features/services/AuthService';
+import { useDispatch } from 'react-redux';
+import { userActions } from 'Entities/Redux/Slices/UserSlice';
 
 const SignInPage = () => {
 	const { t } = useTranslation();
@@ -15,27 +18,21 @@ const SignInPage = () => {
 		email: '',
 		password: '',
 	});
-	const backendURL = 'http://localhost:4000/user/signin';
 	
 	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => 
 		setInput((prev) => ({ ...prev, [ e.target.name ]: e.target.value })); 
+	const dispatch = useDispatch();
+	const setUser = useCallback((user) => dispatch(userActions.setUserInfo(user)), [ dispatch ]);
 	const submitHandler = async(e:React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response = await fetch(backendURL, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json;charset=utf-8',
-			},
-			body: JSON.stringify(input),
-			credentials: 'include',
-		});
-		if(response.ok) {
-			const answer = await response.json();
-			console.log(answer);
-			setServerResponse([ `Добро пожаловать ${answer.name}!` ]);
-		}
-		else {
-			const err = (await response.json()).error;
+		try {
+			const response = await AuthService.login(input);
+			setServerResponse([ `Здравствуйте ${response.data.user.name}!` ]);
+			localStorage.setItem('token', response.data.accessToken);
+			setUser(response.data.user);
+		} catch (error) {
+			
+			const err = error.response.data.error;
 			if( typeof err === 'string'){
 				setServerResponse([ err ]);
 				console.log(err);

@@ -49,7 +49,6 @@ router.post('/signup',
         .withMessage('Пароль должен быть от 6 до 20 символов, содержать одну заглавную букву и иметь хотя бы одну цифру'),
         async (req: Request, res: Response) => {
     const { name, email, password, confirmPassword } = req.body;
-    console.log(req.body)
     const errors: Result<ValidationError> = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).send({ error: errors.array() });
     if(!email || !password || !confirmPassword) return res.status(422).send({ error: 'Не все обязательные поля введены.' });
@@ -85,16 +84,17 @@ router.post('/refresh', async (req: Request, res: Response) => {
         }
     return res.status(401).send({ error: 'Пользователь не авторизован' })
     }
+})
 router.get('/logout', async (req: Request, res: Response) => {
     const { refreshToken } = req.cookies;
     const userInfo = await tokenService.verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET)
     const user = await mongo.findUserByEmail(userInfo?.email)
     if(user){
-        res.clearCookie('refreshToken')
-        await tokenService.removeToken(user, refreshToken)
-        return res.status(200);
+        res.clearCookie('refreshToken');
+        await tokenService.removeToken(user, refreshToken);
+        return res.sendStatus(200);
     }
-    })
-    return res.status(401).send({ error: 'Пользователь не авторизован' })
-})
+    return res.status(401).send({ error: 'Пользователь не авторизован' });
+});
+
 export { router as userRouter }

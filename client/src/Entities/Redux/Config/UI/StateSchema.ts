@@ -11,10 +11,10 @@ export interface StateShema {
     user: UserData,
 }
 export interface UserSchema {
-    id: string,
-    name: string,
-    email: string,
-    isActivated: boolean
+    id?: string,
+    name?: string,
+    email?: string,
+    isActivated?: boolean
 
 }
 export interface UserData {

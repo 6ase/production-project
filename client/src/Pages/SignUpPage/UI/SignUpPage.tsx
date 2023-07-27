@@ -37,7 +37,7 @@ const SignUpPage = () => {
 			const response = await AuthService.registration(input);
 			setServerResponse([ `Регистрация прошла успешно!
 					 На ${input.email} отправлена инструкция по активации аккаунта` ]);
-			localStorage.setItem('token', response.data.refreshToken);
+			localStorage.setItem('token', response.data.accessToken);
 			setUser(response.data.user);
 			console.log(response.data.user);
 		} catch (error) {
