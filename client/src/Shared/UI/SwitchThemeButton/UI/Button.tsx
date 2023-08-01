@@ -14,6 +14,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
     className?:string,
     theme?: string,
 	mode?: string,
+	disabled?: boolean
 }
 const Button: FC<ButtonProps> = (props) => {
 	const {
@@ -21,12 +22,13 @@ const Button: FC<ButtonProps> = (props) => {
 		className,
 		children,
 		theme,
+		disabled,
 		mode,
 		...otherProps
 	}
      = props;
 	return (
-		<button className={classNames(cls.Button, {  }, [ cls[ theme ], cls[ mode ] ])}
+		<button className={classNames(cls.Button, { [ cls.disabled ]: disabled }, [ cls[ theme ], cls[ mode ],  ])}
 			{...otherProps}
 		>
 			{children}

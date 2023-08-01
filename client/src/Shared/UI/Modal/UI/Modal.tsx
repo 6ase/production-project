@@ -3,6 +3,7 @@ import { classNames } from 'Shared/Lib/classNames';
 import cls from './Modal.module.scss';
 import { useDispatch } from 'react-redux';
 import { modalActiveActions } from 'Entities/Redux/Slices/ModalActiveSlice';
+import { userActions } from 'Entities/Redux/Slices/UserSlice';
 
 type ModalProps = {
 	isActive: boolean;
@@ -11,7 +12,10 @@ type ModalProps = {
 const Module:React.FC<ModalProps> = ({ isActive, children }) => {
     
 	const dispatch = useDispatch();
-	const changeActive = useCallback(() => dispatch(modalActiveActions.changeActive()), [ dispatch ]);
+	const changeActive = useCallback(() => {
+		dispatch(modalActiveActions.changeActive());
+		dispatch(userActions.clearError());
+	}, [ dispatch ]);
 	
 	const onContentClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation();

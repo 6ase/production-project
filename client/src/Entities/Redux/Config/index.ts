@@ -13,5 +13,5 @@ export {
 	getCounterValue,
 	getIsModalActive,
 	getModalContent,
-	getUserInfo
+	getUserInfo,
 };

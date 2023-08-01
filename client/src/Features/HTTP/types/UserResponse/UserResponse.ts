@@ -3,4 +3,5 @@ export interface UserResponse {
     email: string;
     isActivated: boolean;
     id: string;
+    isLoading: boolean
 }

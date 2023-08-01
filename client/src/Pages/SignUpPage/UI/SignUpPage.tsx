@@ -1,21 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import { classNames } from 'Shared/Lib/classNames';
-import cls from './SignUpPage.module.scss';
+import React, { useState } from 'react';
 import Button from 'Shared/UI/SwitchThemeButton/UI/Button';
 import { useTranslation } from 'react-i18next';
 import { MyForm } from 'Shared/UI/MyForm';
 import { MyInput } from 'Shared/UI/Modal/MyInput';
-import ErrorMsgComponent, { ErrorMsgComponentProps } from 'Shared/UI/ErrorMsgComponent/UI/ErrorMsgComponent';
-import AuthService from 'Features/services/AuthService';
+import ErrorMsgComponent from 'Shared/UI/ErrorMsgComponent/UI/ErrorMsgComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfo } from 'Entities/Redux/Config';
-import { userActions } from 'Entities/Redux/Slices/UserSlice';
-
-
-export interface ServerErr {
-	msg: ErrorMsgComponentProps
-}
-
+import { signUpByEmail } from 'Features/services/AuthService';
 
 const SignUpPage = () => {
 	const { t } = useTranslation();
@@ -25,35 +16,21 @@ const SignUpPage = () => {
 		password: '',
 		confirmPassword: ''
 	});
-	const [ serverResponse, setServerResponse ] = useState(null);
+
 	const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>{
 		setInput((prev)=>({ ...prev, [ e.target.name ]: e.target.value }));
 	};
 	const dispatch = useDispatch();
-	const setUser = useCallback((user) => dispatch(userActions.setUserInfo(user)), [ dispatch ]);
-	const submitHandler = async(e:React.FormEvent<HTMLFormElement>) => {
+	const user = useSelector(getUserInfo);
+	const submitHandler = (e:React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		try {
-			const response = await AuthService.registration(input);
-			setServerResponse([ `Регистрация прошла успешно!
-					 На ${input.email} отправлена инструкция по активации аккаунта` ]);
-			localStorage.setItem('token', response.data.accessToken);
-			setUser(response.data.user);
-			console.log(response.data.user);
-		} catch (error) {
-			
-			const err = error.response.data.error;
-			if( typeof err === 'string'){
-				setServerResponse([ err ]);
-				console.log(err);
-			}
-			else setServerResponse(err.map((err:ServerErr) => err.msg ));
-		}
+		dispatch<any>(signUpByEmail(input));
 	};
+	
 	return (
 		<MyForm onSubmit={submitHandler} >
-			{ serverResponse? <ErrorMsgComponent error={serverResponse}/> :''}
 			<h1>{t('SignUp')}</h1>
+			{user.error? <ErrorMsgComponent error={user.error}/>:''} 
 			<MyInput name='name' placeholder='Имя' type='text' 
 				value={input.name} onChange={changeHandler} />
 			<MyInput name='email' placeholder='example@google.com' type='email' 
@@ -62,7 +39,7 @@ const SignUpPage = () => {
 				value={input.password} onChange={changeHandler} />
 			<MyInput name='confirmPassword' placeholder='Пароль ещё раз' type='password'
 				value={input.confirmPassword} onChange={changeHandler} />
-			<Button theme='inverseThemeButtons'>{t('SignUp')}</Button>
+			<Button theme='inverseThemeButtons' disabled={user.isLoading}>{t('SignUp')}</Button>
 		</MyForm>
 	);
 };

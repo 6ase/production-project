@@ -1,3 +1,5 @@
+import { ErrorResponse } from 'Features/services/AuthService';
+
 export interface CounterShema {
     value: number
 }
@@ -15,8 +17,14 @@ export interface UserSchema {
     name?: string,
     email?: string,
     isActivated?: boolean
-
 }
+export interface ServerResponse {
+    tokens?: { refreshToken: string, accesToken: string},
+    user?: UserSchema
+}
+
 export interface UserData {
-    userData?: UserSchema
+    userData?: UserSchema,
+    isLoading?: boolean,
+    error?: ErrorResponse
 }

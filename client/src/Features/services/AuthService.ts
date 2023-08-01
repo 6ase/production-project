@@ -1,18 +1,84 @@
-
-import { AuthResponse } from 'Features/HTTP/types/AuthResponse/AuthReponse';
-import { AxiosResponse } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { ServerResponse, UserSchema } from 'Entities/Redux/Config/UI/StateSchema';
+import { UserData } from 'Entities/Redux/Config/UI/StateSchema';
+import { modalActiveActions } from 'Entities/Redux/Slices/ModalActiveSlice';
+import { userActions } from 'Entities/Redux/Slices/UserSlice';
+import { useDispatch } from 'react-redux';
 
-export const API_URL = 'http://localhost:4000';
 
-export default class AuthService {
-	static async login(body: object): Promise<AxiosResponse<AuthResponse>> {
-		return axios.post<AuthResponse>('/user/signin', body, { withCredentials: true, baseURL: API_URL });
-	}
-	static async registration(body: object): Promise<AxiosResponse<AuthResponse>> {
-		return axios.post<AuthResponse>('/user/signup', body, { withCredentials: true, baseURL: API_URL });
-	}
-	static async logout(): Promise<AxiosResponse<void>> {
-		return axios.get('/user/logout', { withCredentials: true, baseURL: API_URL });
-	}
+export interface loginByEmailProps {
+    email: string,
+    password: string
 }
+export interface SignUpByEmailProps {
+    name: string,
+	email: string,
+    password: string,
+	confirmPassword: string,
+}
+export interface ErrorResponse {
+	error: string|object[];
+  }
+const API_URL = 'http://localhost:4000';		
+
+export const loginByEmail = createAsyncThunk<ServerResponse, loginByEmailProps, { rejectValue: ErrorResponse }>(
+	'user/loginByEmail',
+	async (authData, thunkAPI) => {
+		try {
+			const response = await axios.post<ServerResponse>(`${API_URL}/user/signin`, authData, { withCredentials: true });
+			thunkAPI.dispatch(userActions.setUserInfo(response.data.user));
+			localStorage.setItem('token', response.data.tokens.accesToken);
+			thunkAPI.dispatch(modalActiveActions.changeActive());
+			thunkAPI.dispatch(userActions.clearError());
+			return response.data;
+		} catch (error) {
+			console.log(error.response.data);
+			return thunkAPI.rejectWithValue(error.response.data.error);
+		}
+	}
+);
+export const signUpByEmail = createAsyncThunk<ServerResponse, SignUpByEmailProps, { rejectValue: ErrorResponse }>(
+	'user/signUpByEmail',
+	async (authData, thunkAPI) => {
+		try {
+			const response = await axios.post<ServerResponse>(`${API_URL}/user/signup`, authData, { withCredentials: true });
+			thunkAPI.dispatch(userActions.setUserInfo(response.data.user));
+			localStorage.setItem('token', response.data.tokens.accesToken);
+			thunkAPI.dispatch(modalActiveActions.changeActive());
+			thunkAPI.dispatch(userActions.clearError());
+			return response.data;
+		} catch (error) {
+			console.log(error.response.data);
+			return thunkAPI.rejectWithValue(error.response.data.error);
+		}
+	}
+);
+export const logout = createAsyncThunk<{ rejectValue: string }>(
+	'user/logout',
+	async (authData, thunkAPI) => {
+		try {
+			const response = await axios.get(`${API_URL}/user/logout`, { withCredentials: true });
+			thunkAPI.dispatch(userActions.clearUserInfo());
+			localStorage.removeItem('token');
+			return response.data;
+		} catch (error) {
+			console.log(error);
+			return thunkAPI.rejectWithValue(error.response.data.error);
+		}
+	}
+);
+export const checkAuth = createAsyncThunk<{ rejectValue: string }>(
+	'user/checkAuth',
+	async (authData, thunkAPI) => {
+		try {
+			const response = await axios.post(`${API_URL}/user/refresh`, null, { withCredentials: true });
+			thunkAPI.dispatch(userActions.setUserInfo(response.data.user));
+			localStorage.setItem('token', response.data.tokens.accesToken);
+			return response.data;
+		} catch (error) {
+			console.log(error);
+			return thunkAPI.rejectWithValue(error.response.data.error);
+		}
+	}
+);

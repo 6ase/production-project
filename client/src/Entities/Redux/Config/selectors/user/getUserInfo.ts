@@ -1,3 +1,3 @@
 import { StateShema } from '../../UI/StateSchema';
 
-export const getUserInfo = (state: StateShema) => state.user.userData;
+export const getUserInfo = (state: StateShema) => state.user;

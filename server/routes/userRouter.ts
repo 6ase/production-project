@@ -36,7 +36,8 @@ router.post('/signin',
     if (!isPassEquals) return res.status(401).send({error: 'Неверный логин или пароль'})
     const userDto = new UserDto(user);
     const tokens = await tokenService.signToken({...userDto});
-    res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+    res.cookie('refreshToken', tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true, path: '/' })
+    
     await tokenService.checkAndUpdateUserRefreshTokens(user, tokens);
     return res.status(200).send({ tokens, user: userDto })
 });
