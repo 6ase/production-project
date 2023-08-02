@@ -9,6 +9,7 @@ import { modalActiveActions } from 'Entities/Redux/Slices/ModalActiveSlice';
 import { logout } from 'Features/services/AuthService';
 import { getUserInfo } from 'Entities/Redux/Config';
 import { getUserName } from 'Entities/Redux/Config/selectors/user/getUserName';
+import Text from 'Shared/UI/Text/UI/Text';
 
 
 
@@ -28,7 +29,11 @@ const Navbar:React.FC = () => {
 	return (
 		<div className={classNames(cls.nav)}>
 			{ user.userData?.name? (
-				<Button onClick={onLogoutClick} theme='inverseThemeButtons'>{t('LogOut')}</Button>):
+				<>
+					<Text text={`${t('User')}: ${ user.userData.name}`}/>
+					<Button onClick={onLogoutClick} theme='inverseThemeButtons'>{t('LogOut')}</Button>
+				</>
+			):
 				(<>
 					<Button onClick={() => openModal('signIn')} theme='inverseThemeButtons'>{t('SignIn')}</Button>
 					<Button onClick={() => openModal('signUp')} theme='inverseThemeButtons'>{t('SignUp')}</Button>

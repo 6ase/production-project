@@ -14,5 +14,16 @@
 	"increment": "increment",
 	"decrement": "decrement",
 	"Authorization": "Authorization",
-	"LogOut": "Logout"
+	"LogOut": "Logout",
+	"Пользователь не зарегистрирован": "The user is not registered",
+	"Пользователь не авторизован": "The user is not logged in",
+	"Пароли не совпадают": "Passwords don't match",
+	"Пользователь с таким логином уже зарегистрирован": "A user with this username is already registered",
+	"Не все обязательные поля введены": "Not all required fields are entered",
+	"Пароль должен быть от 6 до 20 символов, содержать одну заглавную букву и иметь хотя бы одну цифру": "The password must be from 6 to 20 characters, contain one capital letter and have at least one digit",
+	"Указан не валидный email": "Invalid email is specified",
+	"Имя должно быть от 2 до 20 символов": "The name must be from 2 to 20 characters",
+	"Некорректная ссылка активации": "Invalid activation link",
+	"Неверный логин или пароль": "Invalid username or password",
+	"User": "User"
 }

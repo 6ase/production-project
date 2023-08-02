@@ -7,6 +7,7 @@ import ErrorMsgComponent from 'Shared/UI/ErrorMsgComponent/UI/ErrorMsgComponent'
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfo } from 'Entities/Redux/Config';
 import { signUpByEmail } from 'Features/services/AuthService';
+import Text from 'Shared/UI/Text/UI/Text';
 
 const SignUpPage = () => {
 	const { t } = useTranslation();
@@ -29,7 +30,7 @@ const SignUpPage = () => {
 	
 	return (
 		<MyForm onSubmit={submitHandler} >
-			<h1>{t('SignUp')}</h1>
+			<Text tittle={t('SignUp')}/>
 			{user.error? <ErrorMsgComponent error={user.error}/>:''} 
 			<MyInput name='name' placeholder='Имя' type='text' 
 				value={input.name} onChange={changeHandler} />

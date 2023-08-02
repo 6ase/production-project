@@ -25,7 +25,7 @@ router.get('/activate/:link', async (req: Request, res: Response) => {
 })
 
 router.post('/signin', 
-            body('email').isEmail().withMessage('Указан невалидный email'),
+            body('email').isEmail().withMessage('Указан не валидный email'),
             async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if(!req || !password) return res.status(422).send({ error: 'Не все обязательные поля введены.' });
@@ -45,14 +45,14 @@ router.post('/signup',
         body('name').isLength({ min:2, max: 20 })
         .withMessage('Имя должно быть от 2 до 20 символов'),
         body('email').isEmail()
-        .withMessage('Указан невалидный email'),
+        .withMessage('Указан не валидный email'),
         body('password').matches( /^(?=.*[A-Z])(?=.*\d).{6,20}$/)
         .withMessage('Пароль должен быть от 6 до 20 символов, содержать одну заглавную букву и иметь хотя бы одну цифру'),
         async (req: Request, res: Response) => {
     const { name, email, password, confirmPassword } = req.body;
     const errors: Result<ValidationError> = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).send({ error: errors.array() });
-    if(!email || !password || !confirmPassword) return res.status(422).send({ error: 'Не все обязательные поля введены.' });
+    if(!email || !password || !confirmPassword) return res.status(422).send({ error: 'Не все обязательные поля введены' });
     const userEmail = email.toLowerCase().trim();
     const candidate = await mongo.findUserByEmail(userEmail);
     if(candidate) return res.status(401).send({ error: 'Пользователь с таким логином уже зарегистрирован' });
