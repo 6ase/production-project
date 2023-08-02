@@ -1,10 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ServerResponse, UserSchema } from 'Entities/Redux/Config/UI/StateSchema';
-import { UserData } from 'Entities/Redux/Config/UI/StateSchema';
+import { ServerResponse } from 'Entities/Redux/Config/UI/StateSchema';
 import { modalActiveActions } from 'Entities/Redux/Slices/ModalActiveSlice';
 import { userActions } from 'Entities/Redux/Slices/UserSlice';
-import { useDispatch } from 'react-redux';
 
 
 export interface loginByEmailProps {
@@ -33,7 +31,6 @@ export const loginByEmail = createAsyncThunk<ServerResponse, loginByEmailProps, 
 			thunkAPI.dispatch(userActions.clearError());
 			return response.data;
 		} catch (error) {
-			console.log(error.response.data);
 			return thunkAPI.rejectWithValue(error.response.data.error);
 		}
 	}
@@ -49,7 +46,6 @@ export const signUpByEmail = createAsyncThunk<ServerResponse, SignUpByEmailProps
 			thunkAPI.dispatch(userActions.clearError());
 			return response.data;
 		} catch (error) {
-			console.log(error.response.data);
 			return thunkAPI.rejectWithValue(error.response.data.error);
 		}
 	}
@@ -77,7 +73,6 @@ export const checkAuth = createAsyncThunk<{ rejectValue: string }>(
 			localStorage.setItem('token', response.data.tokens.accesToken);
 			return response.data;
 		} catch (error) {
-			console.log(error);
 			return thunkAPI.rejectWithValue(error.response.data.error);
 		}
 	}
